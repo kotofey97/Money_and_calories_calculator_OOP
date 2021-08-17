@@ -5,7 +5,7 @@ class Record:
     date_format = '%d.%m.%Y'
 
     def __init__(self, amount, comment, date=None):
-        self.amount = amount  # денежная сумма или количество килокалорий
+        self.amount = amount
         self.date = date
         self.comment = comment
         if self.date is None:
@@ -91,20 +91,23 @@ class CashCalculator(Calculator):
                    f'{currency_full_name}')
 
 
-# создадим калькулятор денег с дневным лимитом 1000
-cash_calculator = CashCalculator(1000)
-
-# дата в параметрах не указана,
-# так что по умолчанию к записи
-# должна автоматически добавиться сегодняшняя дата
-cash_calculator.add_record(Record(amount=145, comment='кофе'))
-# и к этой записи тоже дата должна добавиться автоматически
-cash_calculator.add_record(Record(amount=300, comment='Серёге за обед'))
-# а тут пользователь указал дату, сохраняем её
+cash_calculator = CashCalculator(2000)
+cash_calculator.add_record(Record(amount=45, comment='чай'))
+cash_calculator.add_record(Record(amount=350, comment='Маше за обед'))
 cash_calculator.add_record(Record(amount=3000,
-                                  comment='бар в Танин др',
-                                  date='08.11.2019'))
-
+                                  comment='кушоц суши',
+                                  date='11.08.2021'))
 print(cash_calculator.get_today_cash_remained('rub'))
-# должно напечататься
-# На сегодня осталось 555 руб
+print(cash_calculator.get_today_cash_remained('eur'))
+print(f'За прошедшую неделю потрачено {cash_calculator.get_week_stats()} руб')
+
+сalories_calculator = CaloriesCalculator(1500)
+сalories_calculator.add_record(Record(amount=400, comment='хинкали'))
+сalories_calculator.add_record(Record(amount=500, comment='биргер'))
+сalories_calculator.add_record(Record(amount=300,
+                                      comment='суши',
+                                      date='17.08.2021'))
+сalories_calculator.add_record(Record(amount=650,
+                                      comment='суши',
+                                      date='17.08.2021'))
+print(сalories_calculator.get_calories_remained())
